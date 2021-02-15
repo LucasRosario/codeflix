@@ -11,6 +11,7 @@ func init() {
 	govalidator.SetFieldsRequiredByDefault(true)
 }
 
+// Account é TIPO DA CONTA
 type Account struct {
 	Base      `valid:"required"`
 	OwnerName string    `gorm:"column:owner_name;type:varchar(255);not null" valid:"notnull"`
@@ -28,6 +29,7 @@ func (account *Account) isValid() error {
 	return nil
 }
 
+// NewAccount é NOVA CONTA
 func NewAccount(bank *Bank, number string, ownerName string) (*Account, error) {
 	account := Account{
 		Bank:      bank,

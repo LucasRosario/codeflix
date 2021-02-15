@@ -8,6 +8,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
+//PixKeyRepositoryInterface ...
 type PixKeyRepositoryInterface interface {
 	RegisterKey(pixKey *PixKey) (*PixKey, error)
 	FindKeyByKind(key string, kind string) (*PixKey, error)
@@ -20,6 +21,7 @@ func init() {
 	govalidator.SetFieldsRequiredByDefault(true)
 }
 
+//PixKey ;;;
 type PixKey struct {
 	Base      `valid:"required"`
 	Kind      string   `json:"kind" gorm:"type:varchar(20)" valid:"notnull"`
@@ -46,6 +48,7 @@ func (p *PixKey) isValid() error {
 	return nil
 }
 
+//NewPixKey aaa
 func NewPixKey(kind string, account *Account, key string) (*PixKey, error) {
 	pixKey := PixKey{
 		Kind:      kind,

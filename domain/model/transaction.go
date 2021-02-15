@@ -8,6 +8,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
+//TransactionPending aaa
 const (
 	TransactionPending   string = "pending"
 	TransactionCompleted string = "completed"
@@ -15,23 +16,26 @@ const (
 	TransactionConfirmed string = "confirmed"
 )
 
+//TransactionRepositoryInterface sss
 type TransactionRepositoryInterface interface {
 	Register(transaction *Transaction) error
 	Save(transaction *Transaction) error
 	Find(id string) (*Transaction, error)
 }
 
+//Transactions sssa
 type Transactions struct {
 	Transaction []Transaction
 }
 
+//Transaction aaa
 type Transaction struct {
 	Base              `valid:"required"`
 	AccountFrom       *Account `valid:"-"`
 	AccountFromID     string   `gorm:"column:account_from_id;type:uuid;" valid:"notnull"`
 	Amount            float64  `json:"amount" gorm:"type:float" valid:"notnull"`
 	PixKeyTo          *PixKey  `valid:"-"`
-	PixKeyIdTo        string   `gorm:"column:pix_key_id_to;type:uuid;" valid:"notnull"`
+	PixKeyIDTo        string   `gorm:"column:pix_key_id_to;type:uuid;" valid:"notnull"`
 	Status            string   `json:"status" gorm:"type:varchar(20)" valid:"notnull"`
 	Description       string   `json:"description" gorm:"type:varchar(255)" valid:"-"`
 	CancelDescription string   `json:"cancel_description" gorm:"type:varchar(255)" valid:"-"`
@@ -62,6 +66,7 @@ func (t *Transaction) isValid() error {
 	return nil
 }
 
+//Complete bbb
 func (t *Transaction) Complete() error {
 	t.Status = TransactionCompleted
 	t.UpdatedAt = time.Now()
@@ -69,6 +74,7 @@ func (t *Transaction) Complete() error {
 	return err
 }
 
+//Cancel ccc
 func (t *Transaction) Cancel(description string) error {
 	t.Status = TransactionError
 	t.CancelDescription = description
@@ -77,13 +83,14 @@ func (t *Transaction) Cancel(description string) error {
 	return err
 }
 
+//NewTransaction ddd
 func NewTransaction(accountFrom *Account, amount float64, pixKeyTo *PixKey, description string, id string) (*Transaction, error) {
 	transaction := Transaction{
 		AccountFrom:   accountFrom,
 		AccountFromID: accountFrom.ID,
 		Amount:        amount,
 		PixKeyTo:      pixKeyTo,
-		PixKeyIdTo:    pixKeyTo.ID,
+		PixKeyIDTo:    pixKeyTo.ID,
 		Status:        TransactionPending,
 		Description:   description,
 	}

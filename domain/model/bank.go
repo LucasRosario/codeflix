@@ -7,10 +7,12 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
+//Bank TIPO DE CONTA
 type Bank struct {
-	Base `valid:"required"`
-	Code string `json: "code" valdid:"notnull"`
-	Name string `json: "name" valdid:"notnull"`
+	Base     `valid:"required"`
+	Code     string     `json:"code" gorm:"type:varchar(20)" valdid:"notnull"`
+	Name     string     `json:"name" gorm:"type:varchar(255)" valdid:"notnull"`
+	Accounts []*Account `gorm:"ForeingKey:BankID" valid:"-"`
 }
 
 func (bank *Bank) isValid() error {
@@ -21,6 +23,7 @@ func (bank *Bank) isValid() error {
 	return nil
 }
 
+// NewBank NOVA CONTA
 func NewBank(code string, name string) (*Bank, error) {
 	bank := Bank{
 		Code: code,

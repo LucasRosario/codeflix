@@ -1,11 +1,10 @@
 package model_test
 
 import (
+	"github.com/LucasRosario/codiflix/domain/model"
+	uuid "github.com/satori/go.uuid"
 	"testing"
 
-	uuid "github.com/satori/go.uuid"
-
-	"github.com/LucasRosario/codiflix/domain/model"
 	"github.com/stretchr/testify/require"
 )
 
